@@ -1,0 +1,35 @@
+---
+title: "SIPS Workshop - Reproducible Data Visualizations Using R and Binder"
+author: "Pierpaolo Primoceri"
+date: "7/8/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, comment = FALSE, prompt = FALSE, message = FALSE)
+
+# load packages
+library(readr)
+library(tibble)
+library(tidyr)
+library(ggplot2)
+```
+
+```{r read-data}
+full_trains <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-02-26/full_trains.csv")
+```
+
+## Visualization Challenge 2
+```{r}
+full_trains %>% 
+  ggplot(aes(x = journey_time_avg)) + 
+  geom_histogram(bins = 20, alpha = .2) +
+  geom_histogram(data = subset(full_trains, service == "National"), bins = 20, alpha = .5, fill = "red") +
+  labs(title = "Histogram of Average Journey Time for Trains of the SNCF Network",
+       subtitle = "National Service trains highlighted in red",
+       x = "Journey Time (mins.)",
+       y = "Number of Instances")
+```
+
+
+
